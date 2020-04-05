@@ -3,6 +3,11 @@ name = "stream-reduce"
 version = "0.1.0"
 authors = ["Matt Hunzinger <matthunz2@gmail.com>"]
 edition = "2018"
+license = "MIT"
+description = "Fold a stream without an initial value"
+repository = "https://github.com/matthunz/stream-reduce"
+documentation = "https://docs.rs/crate/stream-reduce"
+keywords = ["asynchronous", "stream", "fold"]
 
 [lib]
 name = "stream_reduce"
