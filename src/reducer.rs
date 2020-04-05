@@ -4,7 +4,9 @@ use core::task::{Context, Poll};
 use futures::ready;
 use futures::Stream;
 use pin_utils::{unsafe_pinned, unsafe_unpinned};
+use core::fmt;
 
+/// Future for the [`reduce`](super::Reduce::reduce) method.
 #[must_use = "futures do nothing unless you `.await` or poll them"]
 pub struct Reducer<S, T, F, Fut> {
     stream: S,
@@ -72,5 +74,22 @@ where
                 return Poll::Ready(Some(accum));
             }
         }
+    }
+}
+
+impl<S: Unpin, T, F, Fut: Unpin> Unpin for Reducer<S, T, F, Fut> {}
+
+impl<S, T, F, Fut> fmt::Debug for Reducer<S, T, F, Fut>
+where
+    S: fmt::Debug,
+    T: fmt::Debug,
+    Fut: fmt::Debug,
+{
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("Reducer")
+            .field("stream", &self.stream)
+            .field("accum", &self.accum)
+            .field("future", &self.future)
+            .finish()
     }
 }
